@@ -28,15 +28,18 @@ public class CoinPresenter {
         call.enqueue(new Callback<CoinModel>() {
             @Override
             public void onResponse(Call<CoinModel> call, Response<CoinModel> response) {
+                view.findViewById(R.id.preloader).setVisibility(View.GONE);
                 TextView name = view.findViewById(R.id.name);
                 TextView symbol = view.findViewById(R.id.symbol);
                 TextView price = view.findViewById(R.id.price);
                 ImageView logo1 = view.findViewById(R.id.logo1);
                 ImageView logo2 = view.findViewById(R.id.logo2);
+                ImageView backgroundLogo = view.findViewById(R.id.background_logo);
                 String url = response.body().getImage().getLarge();
 
                 LoadImageFromWeb(view.getContext(), url, logo1);
                 LoadImageFromWeb(view.getContext(), url, logo2);
+                LoadImageFromWeb(view.getContext(), url, backgroundLogo);
                 name.setText(response.body().getName());
                 symbol.setText(response.body().getSymbol().toUpperCase());
                 price.setText(response.body().getMarketData().getCurrentPrice().usd + " USD/" + response.body().getSymbol().toUpperCase());

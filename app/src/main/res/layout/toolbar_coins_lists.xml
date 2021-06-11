@@ -57,7 +57,8 @@
                 android:textSize="25dp"
                 android:hint="Finding by coins"
                 android:imeOptions="actionSearch"
-                android:inputType="text"/>
+                android:inputType="textVisiblePassword"
+                android:textCursorDrawable="@color/accent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
