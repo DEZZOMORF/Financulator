@@ -1,10 +1,12 @@
 package com.example.financulator;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
+
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.InputStream;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +27,7 @@ import retrofit2.Response;
 
 public class CoinPresenter {
 
-    public void getCoinData(View view, String id) {
+    public void getCoinDataForBuy(View view, String id) {
         Call<CoinModel> call = new HttpClient().getApiService().getCoinById(id);
         call.enqueue(new Callback<CoinModel>() {
             @Override
@@ -32,17 +36,43 @@ public class CoinPresenter {
                 TextView name = view.findViewById(R.id.name);
                 TextView symbol = view.findViewById(R.id.symbol);
                 TextView price = view.findViewById(R.id.price);
+                TextView currentCurrency = view.findViewById(R.id.current_currency);
                 ImageView logo1 = view.findViewById(R.id.logo1);
                 ImageView logo2 = view.findViewById(R.id.logo2);
                 ImageView backgroundLogo = view.findViewById(R.id.background_logo);
-                String url = response.body().getImage().getLarge();
+                TextView logoBuffer = view.findViewById(R.id.logo_buffer);
+                Spinner spinner = view.findViewById(R.id.currency);
+                TextInputEditText priceInput = view.findViewById(R.id.price_input);
 
+                String url = response.body().getImage().getLarge();
+                logoBuffer.setText(url);
                 LoadImageFromWeb(view.getContext(), url, logo1);
                 LoadImageFromWeb(view.getContext(), url, logo2);
                 LoadImageFromWeb(view.getContext(), url, backgroundLogo);
                 name.setText(response.body().getName());
                 symbol.setText(response.body().getSymbol().toUpperCase());
-                price.setText(response.body().getMarketData().getCurrentPrice().usd + " USD/" + response.body().getSymbol().toUpperCase());
+
+                List<String> currencyList = new ArrayList<>();
+                Map<String, Double> currencies =  response.body().getMarketData().getCurrencies();
+                Set<String> keys = currencies.keySet();
+                for (String k: keys) { currencyList.add(k.toUpperCase()); }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, currencyList);
+                spinner.setAdapter(adapter);
+                spinner.setSelection(adapter.getPosition("USD"));
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        currentCurrency.setText(parent.getItemAtPosition(position).toString());
+                        Double s = currencies.get(parent.getItemAtPosition(position).toString().toLowerCase());
+                        priceInput.setText(String.format("%.9f", s).replace("," , "."));
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+
+                price.setText(String.format("%.9f", currencies.get("usd")).replace("," , ".") + " USD/" + response.body().getSymbol().toUpperCase());
             }
 
             @Override

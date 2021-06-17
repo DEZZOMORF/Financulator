@@ -36,7 +36,6 @@ class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder>
 
         View view = inflater.inflate(R.layout.list_item, parent, false);
         view.setOnClickListener(mOnClickListener);
-
         return new ViewHolder(view);
     }
 
