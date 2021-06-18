@@ -6,4 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar_details" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/include"
+        layout="@layout/coin_info"
+        app:layout_constraintTop_toBottomOf="@+id/include3" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/gradient2"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <include
+        android:id="@+id/preloader"
+        layout="@layout/please_wait" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

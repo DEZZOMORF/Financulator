@@ -72,7 +72,7 @@ public class CoinPresenter {
                     }
                 });
 
-                price.setText(String.format("%.9f", currencies.get("usd")).replace("," , ".") + " USD/" + response.body().getSymbol().toUpperCase());
+                price.setText(String.format("%.9f", currencies.get("usd")).replace("," , ".") + " " + response.body().getSymbol().toUpperCase() + "/USD");
             }
 
             @Override

@@ -47,11 +47,11 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             MainModel coin = coins.get(itemPosition);
             String item = coin.getId();
-            String logo = coin.getLogo();
+            String symbol = coin.getSymbol();
             Intent intent = new Intent(v.getContext(),  DetailsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("id", item);
-            intent.putExtra("logo", logo);
+            intent.putExtra("symbol", symbol);
             v.getContext().startActivity(intent);
         }
     };
