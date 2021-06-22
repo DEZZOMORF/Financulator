@@ -72,10 +72,6 @@ public class DetailsActivity extends AppCompatActivity implements DBRequest, MyM
     }
 
     public void deleteCoin(View view) {
-        ShowDeletePopup(view);
-    }
-
-    public void ShowDeletePopup(View view) {
         new AlertDialog.Builder(this)
                 .setMessage("Are you sure you want to delete all purchases of this coin?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

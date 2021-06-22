@@ -42,8 +42,8 @@ public interface MyMath {
 
      default double getChangeInPercent(List<BuyModel> buyList, CoinModel coin, double usdChange) {
         double now = getTotalQuantity(buyList) * coin.getMarketData().getCurrencies().get("usd");
-        double was = now + usdChange;
-        return (was/now-1)*100;
+        double was = now - usdChange;
+        return ((now-was)/was) * 100;
     }
 
     default double getTotalQuantity(List<BuyModel> buyList) {
