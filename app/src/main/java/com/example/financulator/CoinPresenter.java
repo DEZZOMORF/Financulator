@@ -1,6 +1,8 @@
 package com.example.financulator;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -10,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 

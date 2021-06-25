@@ -10,6 +10,15 @@
         android:id="@+id/include2"
         layout="@layout/toolbar_main" />
 
+    <include
+        android:id="@+id/total_data"
+        layout="@layout/total_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_ma"
         android:layout_width="match_parent"
@@ -17,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include2" />
+        app:layout_constraintTop_toBottomOf="@+id/total_data" />
 
     <include
         android:id="@+id/preloader"

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -56,7 +57,6 @@ public class DetailsActivity extends AppCompatActivity implements DBRequest, MyM
                 DetailsAdapter adapter = new DetailsAdapter(view.getContext(), buyList, coin, view);
                 recyclerView.setAdapter(adapter);
 
-                TextView change = view.findViewById(R.id.changeTotal);
                 getTotalChange(buyList, coin, change);
 
                 totalQuantity.setText(String.format("%.6f",quantity).replace("," , ".") + " " + symbol + " / " + String.format("%.6f", coin.getMarketData().getCurrencies().get("usd")*quantity).replace("," , ".") + " USD");
@@ -79,7 +79,9 @@ public class DetailsActivity extends AppCompatActivity implements DBRequest, MyM
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteCurrencyById(id, view.getContext());
-                        back(view);
+                        Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(view.getContext(), MainActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

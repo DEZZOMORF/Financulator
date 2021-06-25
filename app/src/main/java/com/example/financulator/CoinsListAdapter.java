@@ -2,6 +2,7 @@ package com.example.financulator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder> implements Filterable {
 
@@ -24,12 +30,14 @@ class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder>
     private final RecyclerView recyclerView;
     private final List<CoinModel> coins = new ArrayList<CoinModel>();
     private final List<CoinModel> filteredCoins = new ArrayList<CoinModel>();
+    private final View view;
 
     CoinsListAdapter(Context context, List<CoinModel> coins, View view) {
         this.filteredCoins.addAll(coins);
         this.coins.addAll(coins);
         this.inflater = LayoutInflater.from(context);
         this.recyclerView = view.findViewById(R.id.recycler_view);
+        this.view = view;
     }
     @Override
     public CoinsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,7 +64,21 @@ class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(CoinsListAdapter.ViewHolder holder, int position) {
         CoinModel coin = filteredCoins.get(position);
-        //holder.imageView.setImageResource(coin.getImage().getSmall());
+
+        /*Call<CoinModel> call = new HttpClient().getApiService().getCoinById(coin.getId());
+        call.enqueue(new Callback<CoinModel>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<CoinModel> call, Response<CoinModel> response) {
+                new CoinPresenter().LoadImageFromWeb(view.getContext(), response.body().getImage().getLarge(), holder.imageView);
+            }
+
+            @Override
+            public void onFailure(Call<CoinModel> call, Throwable t) {
+
+            }
+        });*/
+
         holder.nameView.setText(coin.getName());
         holder.symbolView.setText(coin.getSymbol());
     }

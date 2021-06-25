@@ -7,6 +7,10 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainPresenter {
 
     List<MainModel> mainModelList;
@@ -27,6 +31,22 @@ public class MainPresenter {
         }
 
         return mainModelList;
+    }
+
+    public void getCoinDataById(String id, MainActivity activity) {
+        Call<CoinModel> call = new HttpClient().getApiService().getCoinById(id);
+        call.enqueue(new Callback<CoinModel>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<CoinModel> call, Response<CoinModel> response) {
+                activity.setData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CoinModel> call, Throwable t) {
+
+            }
+        });
     }
 }
 
@@ -52,10 +72,6 @@ class MainModel {
 
     public String getLogo() {
         return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
     }
 
     public double getTotalQuantity() {
